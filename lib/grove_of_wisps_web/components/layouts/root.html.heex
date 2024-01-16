@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Phoenix Framework">
+      <%= assigns[:page_title] || "GroveOfWisps" %>
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <div id="content" class="min-h-screen py-3 flex flex-col">
+    <body class="bg-slate-900 text-slate-200 antialiased justify-self-start">
+      <nav class="flex text-slate-200 border-b-2 rounded-full justify-center">
+        <ol class="outernav flex flex-1 text-indigo-300 justify-left mx-2 lg:mx-4 pt-4">
+          <%= if @current_users do %>
+            <li>Hello, <span class="text-slate-200"><%= @current_users.email %></span>!</li>
+          <% else %>
+            <li>Hello, <span class="italic text-slate-200">Guest</span></li>
+          <% end %>
+        </ol>
+        <ol class="flex justify-center mx-2 lg:mx-4">
+          <li class="inline-block"><h1>Grove of Wisps</h1></li>
+        </ol>
+        <ol class="outernav flex flex-1 text-indigo-300 justify-end mx-2 lg:mx-4 pt-4">
+          <%= if @current_users do %>
+            <li>
+              <.link
+                href={~p"/user/settings"}
+                class="hover:text-indigo-500"
+              >
+                Settings
+              </.link>
+            </li>
+            <li>
+              <.link
+                href={~p"/user/log_out"}
+                method="delete"
+                class="hover:text-indigo-500"
+              >
+                Log out
+              </.link>
+            </li>
+          <% else %>
+            <li>
+              <.link
+                href={~p"/user/register"}
+                class="hover:text-indigo-500"
+              >
+                Register
+              </.link>
+            </li>
+            <li>
+              <.link
+                href={~p"/user/log_in"}
+                class="hover:text-indigo-500"
+              >
+                Log in
+              </.link>
+            </li>
+          <% end %>
+        </ol>
+      </nav>
+  
+      <%= @inner_content %>
+
+    </body>
+    <footer class="text-indigo-300 h-full bottom-3 text-right justify-self-end text-xs font-mono">
+      © Erin A Wiggins 2024
+    </footer>
+  </div>
+</html>
